@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const p1 = new Promise((resolve, reject) => {
+        resolve('ok')
+      })
+
+      const p2 = Promise.resolve('成功')
+      // const p3 = Promise.resolve('dwj')
+      const p3 = Promise.reject('失败')
+
+      // 都成功 才返回成功，只要有一个失败就返回失败，结果值是每个元素的结果值组成的数组，失败就是那个失败的结果值
+      const result = Promise.all([p1, p2, p3])
+      console.log(result)
+    </script>
+  </body>
+</html>
