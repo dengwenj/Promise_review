@@ -10,7 +10,8 @@
   <body>
     <script>
       let p = new DwjPromise((resolve, reject) => {
-        resolve('ok')
+        // resolve('ok')
+        throw 'error'
       })
       console.log(p)
       // p.then(
@@ -19,6 +20,12 @@
       //   },
       //   () => {}
       // )
+
+      let p1 = new Promise((resolve, reject) => {
+        // resolve('ok')
+        // throw '出问题了'
+      })
+      console.log(p1)
     </script>
   </body>
 </html>
