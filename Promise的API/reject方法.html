@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 总是返回失败的，传入的什么，结果值就是什么
+      // let p = Promise.reject('dwj')
+      let p1 = Promise.reject(
+        new Promise((resolve, reject) => {
+          resolve('ok')
+        })
+      )
+      p1.catch((reason) => {
+        reason.then((value) => {
+          console.log(value)
+        })
+      })
+    </script>
+  </body>
+</html>
