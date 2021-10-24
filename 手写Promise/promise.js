@@ -46,21 +46,42 @@ function DwjPromise(executor) {
 
 // 添加 then 方法
 DwjPromise.prototype.then = function (onResolved, onRejected) {
-  // 调用回调函数 // 同步
-  if (this.PromiseState === 'fulfilled') {
-    onResolved(this.PromiseResult)
-  }
+  return new Promise((resolve, reject) => {
+    // 调用回调函数 // 同步
+    if (this.PromiseState === 'fulfilled') {
+      try {
+        // 获取回调函数的执行结果
+        let result = onResolved(this.PromiseResult)
+        if (result instanceof DwjPromise) {
+          // 如果是 Promise 实例
+          result.then(
+            (value) => {
+              resolve(value)
+            },
+            (reason) => {
+              reject(reason)
+            }
+          )
+        } else {
+          // 结果的对象状态为成功
+          resolve(result)
+        }
+      } catch (error) {
+        reject(error)
+      }
+    }
 
-  if (this.PromiseState === 'rejected') {
-    onRejected(this.PromiseResult)
-  }
+    if (this.PromiseState === 'rejected') {
+      onRejected(this.PromiseResult)
+    }
 
-  // 判断 pending 状态 // 异步
-  if (this.PromiseState === 'pending') {
-    // 保存回调函数到实例对象中
-    this.callback.push({
-      onResolved,
-      onRejected,
-    })
-  }
+    // 判断 pending 状态 // 异步
+    if (this.PromiseState === 'pending') {
+      // 保存回调函数到实例对象中
+      this.callback.push({
+        onResolved,
+        onRejected,
+      })
+    }
+  })
 }
