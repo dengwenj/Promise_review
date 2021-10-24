@@ -10,17 +10,19 @@
   <body>
     <script>
       let p = new DwjPromise((resolve, reject) => {
-        resolve('ok')
+        // resolve('ok')
         reject('失败')
         // throw 'error'
       })
       console.log(p)
-      // p.then(
-      //   (value) => {
-      //     console.log(value)
-      //   },
-      //   () => {}
-      // )
+      p.then(
+        (value) => {
+          console.log(value)
+        },
+        (reason) => {
+          console.log(reason)
+        }
+      )
 
       // let p1 = new Promise((resolve, reject) => {
       //   // resolve('ok')

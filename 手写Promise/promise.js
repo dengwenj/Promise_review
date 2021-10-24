@@ -32,4 +32,13 @@ function DwjPromise(executor) {
 }
 
 // 添加 then 方法
-DwjPromise.prototype.then = function (onResolved, onRejected) {}
+DwjPromise.prototype.then = function (onResolved, onRejected) {
+  // 调用回调函数
+  if (this.PromiseState === 'fulfilled') {
+    onResolved(this.PromiseResult)
+  }
+
+  if (this.PromiseState === 'rejected') {
+    onRejected(this.PromiseResult)
+  }
+}
