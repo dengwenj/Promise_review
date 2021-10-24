@@ -11,10 +11,14 @@
     <script>
       let p = new DwjPromise((resolve, reject) => {
         // resolve('ok')
-        reject('失败')
+        // reject('失败')
         // throw 'error'
+        setTimeout(() => {
+          // resolve('成功')
+          reject('shibai')
+        }, 1000)
       })
-      console.log(p)
+
       p.then(
         (value) => {
           console.log(value)
@@ -23,6 +27,8 @@
           console.log(reason)
         }
       )
+
+      console.log(p)
 
       // let p1 = new Promise((resolve, reject) => {
       //   // resolve('ok')
