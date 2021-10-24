@@ -6,5 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <script>
+      const p = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('10')
+        }, 1000)
+      })
+      p.then(
+        (value) => {
+          console.log(value)
+        },
+        (reason) => {
+          console.log(reason)
+        }
+      )
+    </script>
+  </body>
 </html>
