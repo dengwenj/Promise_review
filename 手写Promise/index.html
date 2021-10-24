@@ -14,14 +14,23 @@
         // reject('失败')
         // throw 'error'
         setTimeout(() => {
-          // resolve('成功')
-          reject('shibai')
+          resolve('成功')
+          // reject('shibai')
         }, 1000)
       })
 
       p.then(
         (value) => {
           console.log(value)
+        },
+        (reason) => {
+          console.log(reason)
+        }
+      )
+
+      p.then(
+        (value) => {
+          alert(value)
         },
         (reason) => {
           console.log(reason)

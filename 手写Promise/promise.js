@@ -1,7 +1,7 @@
 function DwjPromise(executor) {
   this.PromiseState = 'pending'
   this.PromiseResult = null
-  this.callback = {} // 这里不写也行
+  this.callback = [] // 这里不写也行
 
   // resolve 函数
   function resolve(data) {
@@ -12,8 +12,10 @@ function DwjPromise(executor) {
     // 修改对象结果值
     this.PromiseResult = data
     // 调用成功的回调函数
-    if (this.callback.onResolved) {
-      this.callback.onResolved(data)
+    if (this.callback.length > 0) {
+      this.callback.forEach((item) => {
+        item.onResolved(data)
+      })
     }
   }
 
@@ -26,8 +28,10 @@ function DwjPromise(executor) {
     // 修改对象结果值
     this.PromiseResult = data
     // 调用失败的回调函数
-    if (this.callback.onRejected) {
-      this.callback.onRejected(data)
+    if (this.callback.length > 0) {
+      this.callback.forEach((item) => {
+        item.onRejected(data)
+      })
     }
   }
 
@@ -54,9 +58,9 @@ DwjPromise.prototype.then = function (onResolved, onRejected) {
   // 判断 pending 状态 // 异步
   if (this.PromiseState === 'pending') {
     // 保存回调函数到实例对象中
-    this.callback = {
+    this.callback.push({
       onResolved,
       onRejected,
-    }
+    })
   }
 }
