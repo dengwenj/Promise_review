@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /* 
+        1 都有可能，正常情况下是先指定回调在=再改变状态，但也可以先改变状态在指定回调
+        2 什么时候才能得到数据
+          1 如果先指定的回调，那当状态发生改变时，回调函数就会调用，得到数据
+          2 如果先改变的状态，那当指定回调是，回调函数就会调用，得到数据
+      */
+      const p = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('成功')
+        }, 1000)
+      })
+
+      p.then((value) => {
+        console.log(value)
+      })
+    </script>
+  </body>
+</html>
