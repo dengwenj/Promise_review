@@ -16,7 +16,7 @@
       })
         .then((value) => {
           console.log(222)
-          return new Promise(() => {})
+          return new Promise(() => {}) // 返回一个 pendding 状态的 Promise 就可以中断 Promise 链
         })
         .then((value) => {
           console.log(333)
