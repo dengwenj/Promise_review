@@ -9,35 +9,45 @@
   </head>
   <body>
     <script>
-      let p = new DwjPromise((resolve, reject) => {
-        // resolve('ok')
-        // reject('失败')
-        // throw 'error'
-        setTimeout(() => {
-          resolve('成功')
-          // reject('shibai')
-        }, 1000)
-      })
+      // let p = new DwjPromise((resolve, reject) => {
+      //   // resolve('ok')
+      //   // reject('失败')
+      //   // throw 'error'
+      //   setTimeout(() => {
+      //     resolve('成功')
+      //     // reject('shibai')
+      //   }, 1000)
+      // })
 
-      const res = p
-        .then()
-        .then((value) => {
-          console.log(value)
-          // return new Promise((resolve, reject) => {
-          //   resolve('成功')
-          //   // reject('shibai ')
-          // })
-          throw '出问题了'
+      // const res = p
+      //   .then()
+      //   .then((value) => {
+      //     console.log(value)
+      //     // return new Promise((resolve, reject) => {
+      //     //   resolve('成功')
+      //     //   // reject('shibai ')
+      //     // })
+      //     throw '出问题了'
+      //   })
+      //   .then((value) => {
+      //     console.log(111)
+      //   })
+      //   .then((value) => {
+      //     console.log(222)
+      //   })
+      //   .catch((reason) => {
+      //     console.log(reason)
+      //   })
+
+      let p1 = DwjPromise.resolve('成功')
+      let p2 = DwjPromise.resolve(
+        new DwjPromise((resolve, reject) => {
+          // resolve('success')
+          reject('no')
         })
-        .then((value) => {
-          console.log(111)
-        })
-        .then((value) => {
-          console.log(222)
-        })
-        .catch((reason) => {
-          console.log(reason)
-        })
+      )
+      let p3 = DwjPromise.resolve(DwjPromise.resolve('chenggong'))
+      console.log(p3)
 
       // let p1 = new Promise((resolve, reject) => {
       //   resolve('ok')

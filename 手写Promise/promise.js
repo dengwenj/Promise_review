@@ -106,6 +106,26 @@ DwjPromise.prototype.then = function (onResolved, onRejected) {
   })
 }
 
+// 添加 catch 方法
 DwjPromise.prototype.catch = function (onRejected) {
   return this.then(undefined, onRejected)
+}
+
+// 添加 resolve 方法
+DwjPromise.resolve = function (value) {
+  // 返回 Promise 对象
+  return new DwjPromise((resolve, reject) => {
+    if (value instanceof DwjPromise) {
+      value.then(
+        (value) => {
+          resolve(value)
+        },
+        (reason) => {
+          reject(reason)
+        }
+      )
+    } else {
+      resolve(value)
+    }
+  })
 }
