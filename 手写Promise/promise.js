@@ -79,8 +79,46 @@ DwjPromise.prototype.then = function (onResolved, onRejected) {
     if (this.PromiseState === 'pending') {
       // 保存回调函数到实例对象中
       this.callback.push({
-        onResolved,
-        onRejected,
+        // 执行成功回调函数
+        onResolved(data) {
+          try {
+            let result = onResolved(data)
+            if (result instanceof DwjPromise) {
+              result.then(
+                (value) => {
+                  resolve(value)
+                },
+                (reason) => {
+                  reject(reason)
+                }
+              )
+            } else {
+              resolve(result)
+            }
+          } catch (error) {
+            reject(error)
+          }
+        },
+        // 执行失败回调函数
+        onRejected(data) {
+          try {
+            let result = onRejected(data)
+            if (result instanceof DwjPromise) {
+              result.then(
+                (value) => {
+                  resolve(value)
+                },
+                (reason) => {
+                  reject(reason)
+                }
+              )
+            } else {
+              resolve(result)
+            }
+          } catch (error) {
+            reject(error)
+          }
+        },
       })
     }
   })
