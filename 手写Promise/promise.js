@@ -156,3 +156,19 @@ DwjPromise.all = function (arr) {
     })
   })
 }
+
+// 添加 race 方法  谁快用谁
+DwjPromise.race = function (arr) {
+  return new Promise((resolve, reject) => {
+    arr.forEach((item) => {
+      item.then(
+        (value) => {
+          resolve(value)
+        },
+        (reason) => {
+          reject(reason)
+        }
+      )
+    })
+  })
+}

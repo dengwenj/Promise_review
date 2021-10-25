@@ -68,12 +68,12 @@
         }, 1000)
       })
       let p2 = new DwjPromise((resolve, reject) => {
-        // resolve('ok')
-        reject('失败')
+        resolve('ok')
+        // reject('失败')
       })
       let p3 = DwjPromise.resolve('成功')
 
-      let p = DwjPromise.all([p1, p2, p3])
+      let p = DwjPromise.race([p1, p2, p3])
       console.log(p)
       // let p1 = new Promise((resolve, reject) => {
       //   resolve('ok')
