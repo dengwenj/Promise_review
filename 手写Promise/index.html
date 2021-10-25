@@ -49,18 +49,32 @@
       // let p3 = DwjPromise.resolve(DwjPromise.resolve('chenggong'))
       // console.log(p3)
 
-      let p1 = new DwjPromise.reject(
-        new Promise((resolve, reject) => {
-          resolve('chenggong')
-        }).then(
-          (value) => {
-            return 1
-          },
-          () => {}
-        )
-      )
-      console.log(p1)
+      // let p1 =  DwjPromise.reject(
+      //   new Promise((resolve, reject) => {
+      //     resolve('chenggong')
+      //   }).then(
+      //     (value) => {
+      //       return 1
+      //     },
+      //     () => {}
+      //   )
+      // )
+      // console.log(p1)
 
+      let p1 = new DwjPromise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('chenggong')
+          // reject('no')
+        }, 1000)
+      })
+      let p2 = new DwjPromise((resolve, reject) => {
+        // resolve('ok')
+        reject('失败')
+      })
+      let p3 = DwjPromise.resolve('成功')
+
+      let p = DwjPromise.all([p1, p2, p3])
+      console.log(p)
       // let p1 = new Promise((resolve, reject) => {
       //   resolve('ok')
       //   // throw '出问题了'

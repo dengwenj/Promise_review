@@ -137,3 +137,22 @@ DwjPromise.reject = function (reason) {
     reject(reason)
   })
 }
+
+// 添加 all 方法
+DwjPromise.all = function (arr) {
+  return new DwjPromise((resolve, reject) => {
+    let arr1 = []
+    arr.forEach((item, index) => {
+      item.then(
+        (value) => {
+          // arr1.push(value) // 这样写 异步的话顺序就不一样
+          arr1[index] = value
+          if (arr1.length === arr.length) resolve(arr1)
+        },
+        (reason) => {
+          reject(reason)
+        }
+      )
+    })
+  })
+}
