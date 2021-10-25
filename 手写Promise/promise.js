@@ -11,12 +11,14 @@ function DwjPromise(executor) {
     this.PromiseState = 'fulfilled'
     // 修改对象结果值
     this.PromiseResult = data
-    // 调用成功的回调函数
-    if (this.callback.length > 0) {
-      this.callback.forEach((item) => {
-        item.onResolved(data)
-      })
-    }
+    // 调用成功的回调函数 // then 方法回调是异步执行的 微任务，要等同步执行完
+    setTimeout(() => {
+      if (this.callback.length > 0) {
+        this.callback.forEach((item) => {
+          item.onResolved(data)
+        })
+      }
+    })
   }
 
   // reject 函数
@@ -27,12 +29,14 @@ function DwjPromise(executor) {
     this.PromiseState = 'rejected'
     // 修改对象结果值
     this.PromiseResult = data
-    // 调用失败的回调函数
-    if (this.callback.length > 0) {
-      this.callback.forEach((item) => {
-        item.onRejected(data)
-      })
-    }
+    // 调用失败的回调函数 // then 方法回调是异步执行的 微任务，要等同步执行完
+    setTimeout(() => {
+      if (this.callback.length > 0) {
+        this.callback.forEach((item) => {
+          item.onRejected(data)
+        })
+      }
+    })
   }
 
   try {
@@ -82,11 +86,17 @@ DwjPromise.prototype.then = function (onResolved, onRejected) {
 
     // 调用回调函数 // 同步
     if (this.PromiseState === 'fulfilled') {
-      encapsulation(onResolved, this.PromiseResult)
+      // then 方法回调是异步执行的 微任务，要等同步执行完
+      setTimeout(() => {
+        encapsulation(onResolved, this.PromiseResult)
+      })
     }
 
     if (this.PromiseState === 'rejected') {
-      encapsulation(onRejected, this.PromiseResult)
+      // then 方法回调是异步执行的 微任务，要等同步执行完
+      setTimeout(() => {
+        encapsulation(onRejected, this.PromiseResult)
+      })
     }
 
     // 判断 pending 状态 // 异步
