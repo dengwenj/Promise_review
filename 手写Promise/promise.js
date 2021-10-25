@@ -47,11 +47,11 @@ function DwjPromise(executor) {
 // 添加 then 方法
 DwjPromise.prototype.then = function (onResolved, onRejected) {
   return new Promise((resolve, reject) => {
-    // 调用回调函数 // 同步
-    if (this.PromiseState === 'fulfilled') {
+    // 封装函数
+    function encapsulation(type, data) {
       try {
         // 获取回调函数的执行结果
-        let result = onResolved(this.PromiseResult)
+        let result = type(data)
         if (result instanceof DwjPromise) {
           // 如果是 Promise 实例
           result.then(
@@ -71,8 +71,13 @@ DwjPromise.prototype.then = function (onResolved, onRejected) {
       }
     }
 
+    // 调用回调函数 // 同步
+    if (this.PromiseState === 'fulfilled') {
+      encapsulation(onResolved, this.PromiseResult)
+    }
+
     if (this.PromiseState === 'rejected') {
-      onRejected(this.PromiseResult)
+      encapsulation(onRejected, this.PromiseResult)
     }
 
     // 判断 pending 状态 // 异步
@@ -81,43 +86,11 @@ DwjPromise.prototype.then = function (onResolved, onRejected) {
       this.callback.push({
         // 执行成功回调函数
         onResolved(data) {
-          try {
-            let result = onResolved(data)
-            if (result instanceof DwjPromise) {
-              result.then(
-                (value) => {
-                  resolve(value)
-                },
-                (reason) => {
-                  reject(reason)
-                }
-              )
-            } else {
-              resolve(result)
-            }
-          } catch (error) {
-            reject(error)
-          }
+          encapsulation(onResolved, data)
         },
         // 执行失败回调函数
         onRejected(data) {
-          try {
-            let result = onRejected(data)
-            if (result instanceof DwjPromise) {
-              result.then(
-                (value) => {
-                  resolve(value)
-                },
-                (reason) => {
-                  reject(reason)
-                }
-              )
-            } else {
-              resolve(result)
-            }
-          } catch (error) {
-            reject(error)
-          }
+          encapsulation(onRejected, data)
         },
       })
     }
