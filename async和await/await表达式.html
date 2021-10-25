@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      async function fun() {
+        const p = new Promise((resolve, reject) => {
+          // resolve('ok')
+          reject('no')
+        })
+        // await 右侧为 promise对象，await 返回的就是 promise 对象成功的值
+        // const res = await p
+        // console.log(res) // ok
+
+        // await 右侧不是 promise 对象, 直接将后面的值作为 await 的返回值
+        // const res = await 20
+        // console.log(res) // 20
+
+        // await 右侧 promise 对象状态为失败，要捕获异常
+        try {
+          const res = await p
+        } catch (error) {
+          // catch 里面的参数就是失败的值
+          console.log(error) // no
+        }
+      }
+      fun()
+    </script>
+  </body>
+</html>
