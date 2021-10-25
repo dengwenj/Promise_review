@@ -129,3 +129,11 @@ DwjPromise.resolve = function (value) {
     }
   })
 }
+
+// 添加 reject 方法
+DwjPromise.reject = function (reason) {
+  // 返回 Promise 对象 永远都是失败的，失败的值就是传入的值
+  return new DwjPromise((resolve, reject) => {
+    reject(reason)
+  })
+}

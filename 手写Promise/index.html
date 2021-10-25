@@ -39,15 +39,27 @@
       //     console.log(reason)
       //   })
 
-      let p1 = DwjPromise.resolve('成功')
-      let p2 = DwjPromise.resolve(
-        new DwjPromise((resolve, reject) => {
-          // resolve('success')
-          reject('no')
-        })
+      // let p1 = DwjPromise.resolve('成功')
+      // let p2 = DwjPromise.resolve(
+      //   new DwjPromise((resolve, reject) => {
+      //     // resolve('success')
+      //     reject('no')
+      //   })
+      // )
+      // let p3 = DwjPromise.resolve(DwjPromise.resolve('chenggong'))
+      // console.log(p3)
+
+      let p1 = new DwjPromise.reject(
+        new Promise((resolve, reject) => {
+          resolve('chenggong')
+        }).then(
+          (value) => {
+            return 1
+          },
+          () => {}
+        )
       )
-      let p3 = DwjPromise.resolve(DwjPromise.resolve('chenggong'))
-      console.log(p3)
+      console.log(p1)
 
       // let p1 = new Promise((resolve, reject) => {
       //   resolve('ok')
