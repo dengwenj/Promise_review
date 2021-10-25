@@ -46,6 +46,15 @@ function DwjPromise(executor) {
 
 // 添加 then 方法
 DwjPromise.prototype.then = function (onResolved, onRejected) {
+  if (typeof onRejected !== 'function') {
+    onRejected = (reason) => {
+      throw reason
+    }
+  }
+  if (typeof onResolved !== 'function') {
+    onResolved = (value) => value
+  }
+
   return new Promise((resolve, reject) => {
     // 封装函数
     function encapsulation(type, data) {
@@ -95,4 +104,8 @@ DwjPromise.prototype.then = function (onResolved, onRejected) {
       })
     }
   })
+}
+
+DwjPromise.prototype.catch = function (onRejected) {
+  return this.then(undefined, onRejected)
 }
